@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+  <div id="header">
+    <div class="container">
+      <nav>
+        <img src="/images/S__2_-removebg-preview.png" class="logo" alt="Logo">
+        <ul id="sidemenu">
+          <li><a href="#header">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#art">Art Gallery</a></li>
+          <li><a href="#Gallery">Gallery</a></li>
+          <i class="fa-solid fa-xmark" onclick="closemenu()"></i>
+        </ul>
+        <i class="fa-solid fa-bars" onclick="openmenu()"></i>
+      </nav>
+      <div class="header-text">
+        <p>Designing with purpose, coding with passion</p>
+        <h1>Hey, I’m <span>Srushti</span> </h1>
+        <h3> Bits of my journey as I build, learn <br> and grow each day</h3>
+      </div>
+    </div>
+  </div>
+  <div id="about">
+    <div class="container">
+      <div class="row">
+        <div class="about-col-1">
+          <img src="/images/about me.jpg" alt="About Me Image">
+        </div>
+        <div class="about-col-2">
+          <h1 class="sub-title">About Me</h1>
+          <p>Hi, I'm Srushti — a curious mind with a creative soul.
+            I blend my love for words, design, and self-expression into everything I do. Whether it's writing heartfelt
+            shayaris, designing minimal logos, or building digital ideas, I believe in keeping things simple yet
+            meaningful.
+            <br> space is my little corner of the internet — a place where I share thoughts, poetry, lessons I'm
+            learning, and whatever inspires me.
+            <br>I'm also on a journey of growth — learning, unlearning, and evolving — and this blog is a reflection of
+            that.
+            <br>Welcome to my world.
+            <br>Let’s connect through words.
+          </p>
+          <div class="tab-titles">
+            <p class="tab-links active-link" onclick="opentab('Skills')">Skills</p>
+            <p class="tab-links" onclick="opentab('Education')">Education</p>
+          </div>
+          <div class="tab-contents active-tab" id="Skills">
+            <ul>
+              <li><span>App development</span><br>Flutter <br> React-native</li>
+              <li><span>Web development</span><br>HTML <br> CSS <br> JavaScript</li>
+              <li><span>Design</span><br>Figma <br> Canva</li>
+              <li><span>Creative Arts</span><br>Shayari <br> Dancing <br> Sketching </li>
+            </ul>
+          </div>
+
+          <div class="tab-contents" id="Education">
+            <ul>
+              <li><span>2009-2022</span><br>LFHS</li>
+              <li><span>2022-2024</span><br>Integrated system/dummy school</li>
+              <li><span>2024-</span><br>Fr.CRCE </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ----------art gallery------------------ -->
+  <div id="art">
+    <div class="container">
+      <h1 class="sub-title">Art Gallery</h1>
+      <div class="slider-wrapper">
+        <div class="slider">
+          <img src="/images/dr1.jpg" alt="Art Image 1" id="slide-1">
+          <img src="/images/dr2.jpg" alt="Art Image 2" id="slide-2">
+          <img src="/images/dr3.jpg" alt="Art Image 3" id="slide-3">
+          <img src="/images/dr4.jpg" alt="Art Image 4" id="slide-4">
+          <img src="/images/dr5.jpg" alt="Art Image 5" id="slide-5">
+          <img src="/images/dr6.jpg" alt="Art Image 6" id="slide-6">
+        </div>
+
+        <div class="slider-nav">
+          <a href="#slide-1"></a>
+          <a href="#slide-2"></a>
+          <a href="#slide-3"></a>
+          <a href="#slide-4"></a>
+          <a href="#slide-5"></a>
+          <a href="#slide-6"></a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <!-- -----------------gallery------------------ -->
+  <div id="Gallery">
+    <div class="container">
+      <h1 class="sub-title">Gallery of Madness</h1>
+      <div class="chaotic-gallery">
+        <div class="gallery-item">
+          <img src="/images/p2.jpg" alt="Photo 1">
+          <div class="caption">
+            <h3>“Trying to look mysterious but sneezed right after this.”</h3>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <img src="/images/p3.jpg" alt="Photo 2">
+          <div class="caption">
+            <h3>“I came. I saw. I forgot what I was doing.”</h3>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <img src="/images/p8.jpg" alt="Photo 4">
+          <div class="caption">
+            <h3>“Proof I went outside for 5 minutes.”</h3>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <img src="/images/p1.jpg" alt="Photo 5">
+          <div class="caption">
+            <h3>"Came for peace. Got a mini tsunami."</h3>
+          </div>
+
+        </div>
+        <div class="gallery-item">
+          <img src="/images/p6.jpg" alt="Photo 6">
+          <div class="caption">
+            <h3>“Caught between a ‘sunkissed glow’ and a heatstroke.”</h3>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <img src="/images/p7.jpg" alt="Photo 7">
+          <div class="caption">
+            <h3>"Wind: 1 | Hair: 0 | Love life: buffering..."</h3>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <img src="/images/p4.jpg" alt="Photo 8">
+          <div class="caption">
+            <h3>"Spitting wisdom or just talking nonsense—only the mic knows."</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="contact">
+      <div class="container">
+        <div class="row">
+          <div class="contact-left">
+            <h1 class="sub-title">Contact Me</h1>
+            <p>Have a question or want to connect? Feel free to reach out!</p>
+            <p><i class="fa-solid fa-paper-plane"></i>Email:srushtim0410@gmail.com</p>
+
+            <div class="social-icons">
+              <a href="https://www.linkedin.com/in/srushti-manwal-560902239/">
+                <i class="fa-brands fa-linkedin"></i></a>
+            </div>
+          </div>
+          <div class="contact-right">
+            <form name="submit-to-google-sheet">
+              <input type="text" name="Name" placeholder="Your Name" required>
+              <input type="email" name="Email" placeholder="Your Email" required>
+              <textarea rows="6" name="Message" placeholder="Your Message" required></textarea>
+              <button type="submit " class="btn btn2">Submit</button>
+            </form>
+          </div>
+        </div>
+        <script>
+          var tablinks = document.getElementsByClassName("tab-links");
+          var tabcontents = document.getElementsByClassName("tab-contents");
+          function opentab(tabname) {
+            for (tablink of tablinks) {
+              tablink.classList.remove("active-link");
+            }
+            for (tabcontent of tabcontents) {
+              tabcontent.classList.remove("active-tab");
+            }
+            event.currentTarget.classList.add("active-link");
+            document.getElementById(tabname).classList.add("active-tab");
+          }
+        </script>
+        <script>
+          var sidemenu = document.getElementById("sidemenu");
+          function openmenu() {
+            sidemenu.style.right = "0px";
+          }
+          function closemenu() {
+            sidemenu.style.right = "-200px";
+          }
+        </script>
+        <script>
+          const scriptURL = 'https://script.google.com/macros/s/AKfycbwNrfpDpGM_ZayNZ9DDK5CUzy3Bu_-lzn0mTC7bQX4ED1tPOy_SvjVz08mUXtEEUiIF/exec'
+          const form = document.forms['submit-to-google-sheet']
+
+          form.addEventListener('submit', e => {
+            e.preventDefault()
+            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+              .then(response => console.log('Success!', response))
+              .catch(error => console.error('Error!', error.message))
+          })
+        </script>
+</body>
+
+</html>
