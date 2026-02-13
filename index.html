@@ -135,22 +135,19 @@
         </div>
 
         <div class="contact-right">
-         <form action="https://formspree.io/f/mgolwdjo" method="POST">
+        <form action="https://formspree.io/f/mgolwdjo" method="POST">
 
   <input type="text" name="name" placeholder="Your Name" required>
 
+  <!-- THIS is important -->
   <input type="email" name="_replyto" placeholder="Your Email" required>
 
   <textarea name="message" rows="6" placeholder="Your Message" required></textarea>
 
-  <!-- REQUIRED FOR AUTO-REPLY -->
-  <input type="hidden" name="_replyto" value="{{email}}">
-
-  <!-- AUTO-REPLY MESSAGE -->
   <input type="hidden" name="_autoresponse"
-    value="Hi there 💛, Thank you for reaching out! I’ve received your message and will reply soon — Srushti 💛">
+    value="Hi there,AThank you for reaching out! I’ll reply soon 💛— Srushti">
 
-  <button type="submit" class="btn btn2">Submit</button>
+  <button type="submit">Submit</button>
 
 </form>
 
@@ -180,6 +177,7 @@
 
 </body>
 </html>
+
 
 
 
