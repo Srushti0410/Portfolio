@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, ArrowRight, Layers, ChevronRight, ChevronLeft } from 'lucide-react';
+import { ExternalLink, ArrowRight, Layers, ChevronRight, ChevronLeft, Sparkles } from 'lucide-react';
 
 export default function RecentWorks() {
   const [activeIdx, setActiveIdx] = useState(0);
@@ -46,7 +46,6 @@ export default function RecentWorks() {
 
   const handleCardClick = (index) => {
     if (index === activeIdx) {
-      // Cycle forward
       setActiveIdx((prev) => (prev + 1) % projects.length);
     } else {
       setActiveIdx(index);
@@ -61,15 +60,27 @@ export default function RecentWorks() {
     setActiveIdx((prev) => (prev - 1 + projects.length) % projects.length);
   };
 
+  const handleDragEnd = (event, info) => {
+    if (info.offset.x < -80 || info.offset.y < -80) {
+      handleNext();
+    } else if (info.offset.x > 80 || info.offset.y > 80) {
+      handlePrev();
+    }
+  };
+
   return (
-    <section id="work" className="py-24 sm:py-32 w-full bg-[#050505] border-t border-white/5 relative">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 md:px-12">
+    <section id="work" className="py-24 sm:py-32 w-full bg-[#050505] border-t border-white/5 relative overflow-hidden">
+      
+      {/* Subtle Background Glow behind Stack */}
+      <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-[#ff0055]/10 rounded-full blur-[140px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 md:px-12 relative z-10">
         
         {/* Section Top Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 sm:mb-16 gap-6">
           <div>
             <span className="text-xs font-mono font-semibold text-[#ff0055] tracking-widest uppercase mb-3 sm:mb-4 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#ff0055]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#ff0055] animate-ping" />
               02 // FEATURED PORTFOLIO
             </span>
             <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tighter leading-none">
@@ -80,20 +91,24 @@ export default function RecentWorks() {
           <div className="flex items-center justify-between sm:justify-start gap-4 w-full sm:w-auto">
             {/* Manual Stack Arrows */}
             <div className="flex items-center gap-2">
-              <button
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 onClick={handlePrev}
-                className="w-10 h-10 rounded-full border border-white/10 bg-[#0c0c0e] flex items-center justify-center text-gray-300 hover:border-[#ff0055] hover:text-[#ff0055] transition-colors"
+                className="w-10 h-10 rounded-full border border-white/10 bg-[#0c0c0e] flex items-center justify-center text-gray-300 hover:border-[#ff0055] hover:text-[#ff0055] transition-colors shadow-lg"
                 aria-label="Previous project"
               >
                 <ChevronLeft size={18} />
-              </button>
-              <button
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 onClick={handleNext}
-                className="w-10 h-10 rounded-full border border-white/10 bg-[#0c0c0e] flex items-center justify-center text-gray-300 hover:border-[#ff0055] hover:text-[#ff0055] transition-colors"
+                className="w-10 h-10 rounded-full border border-white/10 bg-[#0c0c0e] flex items-center justify-center text-gray-300 hover:border-[#ff0055] hover:text-[#ff0055] transition-colors shadow-lg"
                 aria-label="Next project"
               >
                 <ChevronRight size={18} />
-              </button>
+              </motion.button>
             </div>
 
             <button 
@@ -115,8 +130,8 @@ export default function RecentWorks() {
           {/* Left Side: 3D Stacked Cards Deck (7 cols) */}
           <div className="lg:col-span-7 flex flex-col items-center w-full">
             
-            {/* Stack Box Container with Mobile Responsive Height */}
-            <div className="relative w-full h-[310px] xs:h-[360px] sm:h-[430px] md:h-[480px] perspective-[1200px]">
+            {/* Stack Box Container with Mobile Responsive Height & 3D Perspective */}
+            <div className="relative w-full h-[310px] xs:h-[360px] sm:h-[430px] md:h-[480px] perspective-[1400px]">
               {projects.map((project, index) => {
                 const total = projects.length;
                 const diff = (index - activeIdx + total) % total;
@@ -126,31 +141,37 @@ export default function RecentWorks() {
                   <motion.div
                     key={project.id}
                     onClick={() => handleCardClick(index)}
+                    drag={isTopCard ? true : false}
+                    dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
+                    dragElastic={0.4}
+                    onDragEnd={handleDragEnd}
                     animate={{
-                      y: diff * 24,
+                      y: diff * 28,
                       scale: 1 - diff * 0.05,
                       rotateX: diff * 2.5,
                       zIndex: total - diff,
                       opacity: diff > 3 ? 0 : 1 - diff * 0.15,
                     }}
                     transition={{
-                      duration: 0.6,
-                      ease: [0.32, 0.72, 0, 1],
+                      type: 'spring',
+                      stiffness: 260,
+                      damping: 24,
                     }}
                     whileHover={isTopCard ? { scale: 1.02, y: -6 } : {}}
+                    whileTap={isTopCard ? { cursor: 'grabbing' } : {}}
                     className={`absolute inset-0 w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer border border-white/10 bg-[#0c0c0e] shadow-2xl transition-shadow ${
-                      isTopCard ? 'ring-1 ring-[#ff0055]/40 shadow-[0_20px_60px_rgba(255,0,85,0.25)]' : 'opacity-80 filter brightness-90'
+                      isTopCard ? 'ring-1 ring-[#ff0055]/50 shadow-[0_20px_60px_rgba(255,0,85,0.3)]' : 'opacity-80 filter brightness-90'
                     }`}
                   >
                     {/* Project Screenshot / Image */}
                     <img 
                       src={project.image} 
                       alt={project.title}
-                      className="w-full h-full object-cover object-top transition-transform duration-700"
+                      className="w-full h-full object-cover object-top transition-transform duration-700 pointer-events-none"
                     />
 
                     {/* Dark Gradient Overlay & Banner */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent flex flex-col justify-between p-5 sm:p-8">
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent flex flex-col justify-between p-5 sm:p-8 pointer-events-none">
                       
                       {/* Top Bar inside card */}
                       <div className="flex items-center justify-between">
@@ -170,7 +191,7 @@ export default function RecentWorks() {
                         </h3>
                         <p className="text-[10px] sm:text-xs font-mono text-gray-400 mt-1 flex items-center gap-1.5">
                           <Layers size={12} className="text-[#ff0055]" />
-                          <span>Tap card to cycle stack</span>
+                          <span>Swipe or click to cycle deck</span>
                         </p>
                       </div>
 
@@ -188,7 +209,7 @@ export default function RecentWorks() {
                   onClick={() => setActiveIdx(idx)}
                   aria-label={`Go to project ${idx + 1}`}
                   className={`h-2.5 rounded-full transition-all duration-300 ${
-                    idx === activeIdx ? 'w-7 sm:w-8 bg-[#ff0055] shadow-[0_0_10px_#ff0055]' : 'w-2.5 bg-white/20 hover:bg-white/40'
+                    idx === activeIdx ? 'w-8 bg-[#ff0055] shadow-[0_0_12px_#ff0055]' : 'w-2.5 bg-white/20 hover:bg-white/40'
                   }`}
                 />
               ))}
@@ -201,10 +222,10 @@ export default function RecentWorks() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={projects[activeIdx].id}
-                initial={{ opacity: 0, x: 15 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -15 }}
-                transition={{ duration: 0.35 }}
+                initial={{ opacity: 0, x: 20, filter: 'blur(4px)' }}
+                animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+                exit={{ opacity: 0, x: -20, filter: 'blur(4px)' }}
+                transition={{ duration: 0.35, ease: 'easeInOut' }}
                 className="flex flex-col items-start"
               >
                 {/* Category Pill */}
@@ -225,27 +246,30 @@ export default function RecentWorks() {
                 {/* Tag Pills */}
                 <div className="flex flex-wrap gap-2 mb-8 sm:mb-10">
                   {projects[activeIdx].tags.map((tag) => (
-                    <span 
+                    <motion.span 
                       key={tag}
-                      className="px-2.5 sm:px-3 py-1 rounded-md bg-[#0c0c0e] border border-white/10 text-[11px] sm:text-xs font-mono text-gray-400"
+                      whileHover={{ scale: 1.05 }}
+                      className="px-2.5 sm:px-3 py-1 rounded-md bg-[#0c0c0e] border border-white/10 text-[11px] sm:text-xs font-mono text-gray-400 hover:border-[#ff0055]/50 hover:text-[#ff0055] transition-colors cursor-default"
                     >
                       #{tag}
-                    </span>
+                    </motion.span>
                   ))}
                 </div>
 
                 {/* Explore Project Button */}
-                <a
+                <motion.a
                   href={projects[activeIdx].link}
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  whileTap={{ scale: 0.97 }}
                   onClick={(e) => {
                     e.preventDefault();
                     alert(`Opening details for ${projects[activeIdx].title}`);
                   }}
-                  className="inline-flex items-center justify-center gap-3 px-7 py-3.5 rounded-full bg-[#0c0c0e] border border-[#ff0055]/50 text-[#ff0055] font-semibold text-xs sm:text-sm tracking-wider uppercase hover:bg-[#ff0055] hover:text-white transition-all duration-300 group shadow-[0_0_15px_rgba(255,0,85,0.2)] w-full sm:w-auto"
+                  className="inline-flex items-center justify-center gap-3 px-7 py-3.5 rounded-full bg-[#0c0c0e] border border-[#ff0055]/50 text-[#ff0055] font-semibold text-xs sm:text-sm tracking-wider uppercase hover:bg-[#ff0055] hover:text-white transition-all duration-300 group shadow-[0_0_20px_rgba(255,0,85,0.2)] w-full sm:w-auto"
                 >
                   <span>Explore Project</span>
                   <ExternalLink size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </a>
+                </motion.a>
               </motion.div>
             </AnimatePresence>
           </div>

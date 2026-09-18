@@ -185,7 +185,7 @@ export default function Services() {
 
   const handleDomainSelect = (idx) => {
     setActiveDomainIdx(idx);
-    setActiveSubNodeIdx(0); // Reset subnode index when switching domains
+    setActiveSubNodeIdx(0);
   };
 
   const handleNextSubNode = () => {
@@ -208,7 +208,7 @@ export default function Services() {
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-16 sm:mb-20">
           <span className="text-xs font-mono font-semibold text-[#ff0055] tracking-widest uppercase mb-3 inline-flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#ff0055]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#ff0055] animate-ping" />
             03 // TECHNICAL EXPERTISE
           </span>
           
@@ -221,9 +221,8 @@ export default function Services() {
           </p>
         </div>
 
-        {/* Level 1: Domain Selection Pipeline Track (4 Main Tabs Connected by Glowing Line) */}
+        {/* Level 1: Domain Selection Pipeline Track */}
         <div className="relative mb-14">
-          {/* Connecting Track Line */}
           <div className="hidden md:block absolute top-1/2 left-0 right-0 h-[2px] bg-white/10 -translate-y-1/2 z-0" />
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 relative z-10">
@@ -232,43 +231,43 @@ export default function Services() {
               const isSelected = idx === activeDomainIdx;
 
               return (
-                <button
+                <motion.button
                   key={dom.id}
                   onClick={() => handleDomainSelect(idx)}
+                  whileHover={{ y: -3, scale: 1.02 }}
+                  whileTap={{ scale: 0.97 }}
                   className={`flex flex-col items-start p-4 sm:p-5 rounded-2xl border text-left transition-all duration-300 relative overflow-hidden group ${
                     isSelected
                       ? 'bg-[#0c0c0e] border-[#ff0055] shadow-[0_0_25px_rgba(255,0,85,0.25)] ring-1 ring-[#ff0055]/50'
                       : 'bg-[#0c0c0e]/60 border-white/10 hover:border-white/30 hover:bg-[#0c0c0e]'
                   }`}
                 >
-                  {/* Top Row inside Domain Button */}
                   <div className="w-full flex items-center justify-between mb-3">
                     <span className={`font-mono text-xs font-bold ${isSelected ? 'text-[#ff0055]' : 'text-gray-500'}`}>
                       {dom.num}
                     </span>
                     
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
-                      isSelected ? 'bg-[#ff0055] text-white shadow-[0_0_10px_#ff0055]' : 'bg-white/5 text-gray-400 group-hover:text-white'
+                      isSelected ? 'bg-[#ff0055] text-white shadow-[0_0_12px_#ff0055]' : 'bg-white/5 text-gray-400 group-hover:text-white'
                     }`}>
                       <IconComp size={16} />
                     </div>
                   </div>
 
-                  {/* Title */}
                   <h3 className={`font-display text-xs sm:text-sm font-extrabold tracking-tight transition-colors ${
                     isSelected ? 'text-white' : 'text-gray-400 group-hover:text-gray-200'
                   }`}>
                     {dom.title}
                   </h3>
 
-                  {/* Glowing Indicator Bar */}
                   {isSelected && (
                     <motion.div 
                       layoutId="activeDomainBar"
-                      className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#ff0055]" 
+                      className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#ff0055] shadow-[0_0_8px_#ff0055]" 
+                      transition={{ type: 'spring', stiffness: 350, damping: 28 }}
                     />
                   )}
-                </button>
+                </motion.button>
               );
             })}
           </div>
@@ -278,9 +277,9 @@ export default function Services() {
         <AnimatePresence mode="wait">
           <motion.div
             key={currentDomain.id}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
+            initial={{ opacity: 0, y: 15, filter: 'blur(4px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, y: -15, filter: 'blur(4px)' }}
             transition={{ duration: 0.4 }}
             className="bg-[#0c0c0e] border border-white/10 rounded-3xl p-6 sm:p-8 mb-12 shadow-2xl relative overflow-hidden"
           >
@@ -294,23 +293,23 @@ export default function Services() {
                 </p>
               </div>
 
-              {/* Tag Pills */}
               <div className="flex flex-wrap gap-2 md:justify-end shrink-0">
                 {currentDomain.tags.map((tag) => (
-                  <span
+                  <motion.span
                     key={tag}
-                    className="px-3 py-1 rounded-full bg-[#ff0055]/10 border border-[#ff0055]/30 text-[#ff0055] text-xs font-mono font-medium"
+                    whileHover={{ scale: 1.05 }}
+                    className="px-3 py-1 rounded-full bg-[#ff0055]/10 border border-[#ff0055]/30 text-[#ff0055] text-xs font-mono font-medium cursor-default"
                   >
                     #{tag}
-                  </span>
+                  </motion.span>
                 ))}
               </div>
             </div>
           </motion.div>
         </AnimatePresence>
 
-        {/* Level 2: Interactive Sub-Node Horizontal Pipeline (4-5 Nodes per Topic) */}
-        <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl relative">
+        {/* Level 2: Interactive Sub-Node Horizontal Pipeline */}
+        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl relative">
           
           <div className="flex items-center justify-between border-b border-white/10 pb-6 mb-8">
             <div>
@@ -323,28 +322,30 @@ export default function Services() {
               </p>
             </div>
 
-            {/* Step Controls */}
             <div className="flex items-center gap-2">
-              <button
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 onClick={handlePrevSubNode}
                 className="w-9 h-9 rounded-full border border-white/10 bg-[#0c0c0e] flex items-center justify-center text-gray-300 hover:border-[#ff0055] hover:text-[#ff0055] transition-colors"
                 aria-label="Previous step"
               >
                 <ChevronLeft size={16} />
-              </button>
-              <button
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 onClick={handleNextSubNode}
                 className="w-9 h-9 rounded-full border border-white/10 bg-[#0c0c0e] flex items-center justify-center text-gray-300 hover:border-[#ff0055] hover:text-[#ff0055] transition-colors"
                 aria-label="Next step"
               >
                 <ChevronRight size={16} />
-              </button>
+              </motion.button>
             </div>
           </div>
 
           {/* Horizontal Pipeline Node Stepper Track */}
           <div className="relative mb-10 overflow-x-auto pb-4 scrollbar-thin">
-            {/* Glowing Connector Line behind nodes */}
             <div className="absolute top-6 left-8 right-8 h-[2px] bg-white/10 -translate-y-1/2 z-0 min-w-[600px]" />
 
             <div className="flex items-center justify-between min-w-[600px] relative z-10 px-4">
@@ -352,12 +353,13 @@ export default function Services() {
                 const isSubActive = nIdx === activeSubNodeIdx;
 
                 return (
-                  <button
+                  <motion.button
                     key={node.id}
                     onClick={() => setActiveSubNodeIdx(nIdx)}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
                     className="flex flex-col items-center group focus:outline-none"
                   >
-                    {/* Circle Node Button */}
                     <div className={`w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all duration-300 relative ${
                       isSubActive
                         ? 'bg-[#ff0055] border-[#ff0055] text-white shadow-[0_0_20px_#ff0055] scale-110'
@@ -369,19 +371,17 @@ export default function Services() {
                         <span className="font-mono text-xs font-bold">{nIdx + 1}</span>
                       )}
 
-                      {/* Ping animation on active node */}
                       {isSubActive && (
                         <span className="animate-ping absolute inset-0 rounded-full bg-[#ff0055] opacity-50 pointer-events-none" />
                       )}
                     </div>
 
-                    {/* Node Title below icon */}
                     <span className={`text-[11px] font-mono font-semibold mt-3 max-w-[110px] text-center truncate transition-colors ${
                       isSubActive ? 'text-[#ff0055]' : 'text-gray-400 group-hover:text-gray-200'
                     }`}>
                       {node.title.split('. ')[1] || node.title}
                     </span>
-                  </button>
+                  </motion.button>
                 );
               })}
             </div>
@@ -391,28 +391,24 @@ export default function Services() {
           <AnimatePresence mode="wait">
             <motion.div
               key={activeSubNode.id}
-              initial={{ opacity: 0, scale: 0.98, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.98, y: -10 }}
-              transition={{ duration: 0.35 }}
-              className="bg-[#0c0c0e] border border-white/10 rounded-2xl p-6 sm:p-8 relative overflow-hidden"
+              initial={{ opacity: 0, scale: 0.98, y: 12, filter: 'blur(4px)' }}
+              animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, scale: 0.98, y: -12, filter: 'blur(4px)' }}
+              transition={{ duration: 0.35, ease: 'easeInOut' }}
+              className="bg-[#0c0c0e] border border-white/10 rounded-2xl p-6 sm:p-8 relative overflow-hidden shadow-xl"
             >
-              {/* Badge */}
               <div className="inline-block px-3 py-1 rounded-md bg-[#ff0055]/10 border border-[#ff0055]/30 text-[#ff0055] font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-4">
                 {activeSubNode.badge}
               </div>
 
-              {/* Title */}
               <h5 className="font-display text-xl sm:text-2xl font-extrabold text-white tracking-tight mb-3">
                 {activeSubNode.title}
               </h5>
 
-              {/* Description */}
               <p className="text-gray-200 font-sans text-sm sm:text-base leading-relaxed mb-4">
                 {activeSubNode.description}
               </p>
 
-              {/* Details */}
               <div className="pt-4 border-t border-white/10 text-xs font-mono text-gray-400 flex items-start gap-2">
                 <span className="text-[#ff0055] font-bold">➜</span>
                 <span>{activeSubNode.details}</span>

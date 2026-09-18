@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Mail, ArrowUpRight, Copy, Check, Github, Linkedin, Twitter } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Mail, ArrowUpRight, Copy, Check, Github, Linkedin, Twitter, ArrowUp } from 'lucide-react';
 
 export default function Footer() {
   const [copied, setCopied] = useState(false);
@@ -15,6 +16,10 @@ export default function Footer() {
     e.preventDefault();
     const el = document.querySelector(href);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -35,7 +40,7 @@ export default function Footer() {
           {/* Left Column (7 cols): Heading, Intro, Email CTA Button */}
           <div className="lg:col-span-7 flex flex-col items-start">
             <span className="text-xs font-mono font-semibold text-[#ff0055] tracking-widest uppercase mb-4 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#ff0055]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#ff0055] animate-ping" />
               04 // GET IN TOUCH
             </span>
 
@@ -51,22 +56,26 @@ export default function Footer() {
 
             {/* Email CTA Pill Button */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto">
-              <a
+              <motion.a
                 href={`mailto:${email}`}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.96 }}
                 className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-white text-black font-semibold text-xs sm:text-sm tracking-wider uppercase hover:bg-[#ff0055] hover:text-white transition-all duration-300 shadow-[0_0_25px_rgba(255,0,85,0.3)] group w-full sm:w-auto"
               >
                 <Mail size={18} />
                 <span>Send An Email</span>
                 <ArrowUpRight size={18} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </a>
+              </motion.a>
 
-              <button
+              <motion.button
                 onClick={handleCopyEmail}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
                 className="inline-flex items-center justify-center gap-2 px-5 py-4 rounded-full bg-[#0c0c0e] border border-white/10 text-gray-300 text-xs font-mono tracking-wider hover:border-[#ff0055] hover:text-[#ff0055] transition-all w-full sm:w-auto"
               >
                 {copied ? <Check size={14} className="text-[#ff0055]" /> : <Copy size={14} />}
                 <span>{copied ? "COPIED TO CLIPBOARD!" : "COPY EMAIL"}</span>
-              </button>
+              </motion.button>
             </div>
           </div>
 
@@ -140,9 +149,20 @@ export default function Footer() {
 
         </div>
 
-        {/* Bottom Row: Copyright & Credits */}
+        {/* Bottom Row: Copyright, Credits & Scroll Top */}
         <div className="pt-8 sm:pt-10 flex flex-col sm:flex-row items-center justify-between text-[11px] sm:text-xs font-mono text-gray-400 gap-4 text-center sm:text-left">
           <p>© 2026 Srushti. All rights reserved.</p>
+
+          <motion.button
+            onClick={scrollToTop}
+            whileHover={{ y: -3, scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#0c0c0e] border border-white/10 text-gray-300 hover:border-[#ff0055] hover:text-[#ff0055] transition-all"
+          >
+            <span>BACK TO TOP</span>
+            <ArrowUp size={14} />
+          </motion.button>
+
           <p className="flex items-center gap-1 justify-center">
             CRAFTED WITH <span className="text-[#ff0055]">REACT</span> & <span className="text-[#ff0055]">TAILWIND</span>
           </p>
